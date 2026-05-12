@@ -1,0 +1,108 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // 0. Global safety net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // 3. Global Helpers
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function isVerified() {
+      return isSignedIn() && request.auth.token.email_verified == true;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && (
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid)) ||
+        request.auth.token.email == "k36064295@gmail.com"
+      );
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // --- User Validation ---
+    function isValidUser(data) {
+      return data.keys().hasAll(['uid', 'email', 'role', 'createdAt', 'updatedAt']) &&
+             data.keys().size() <= 9 &&
+             data.uid == request.auth.uid &&
+             data.email is string && data.email.size() <= 256 &&
+             data.role in ['admin', 'user'] &&
+             data.isOnline is bool &&
+             data.createdAt is timestamp &&
+             data.updatedAt is timestamp;
+    }
+
+    match /users/{userId} {
+      allow get: if isSignedIn() && (isOwner(userId) || isAdmin());
+      allow list: if isAdmin();
+      
+      allow create: if isSignedIn() && 
+                      isValidId(userId) && 
+                      userId == request.auth.uid && 
+                      isValidUser(incoming()) &&
+                      incoming().role == 'user' && // Self-registered are always 'user'
+                      incoming().createdAt == request.time &&
+                      incoming().updatedAt == request.time;
+
+      allow update: if isSignedIn() && 
+                      isValidId(userId) && 
+                      (
+                        // Admin update everything
+                        (isAdmin() && isValidUser(incoming())) ||
+                        // Owner update status or name
+                        (isOwner(userId) && 
+                         isValidUser(incoming()) &&
+                         incoming().role == existing().role && // Cannot change own role
+                         incoming().email == existing().email &&
+                         incoming().uid == existing().uid &&
+                         incoming().createdAt == existing().createdAt &&
+                         incoming().updatedAt == request.time &&
+                         incoming().diff(existing()).affectedKeys().hasOnly(['displayName', 'photoURL', 'isOnline', 'lastSeen', 'updatedAt']))
+                      );
+      
+      allow delete: if isAdmin();
+    }
+
+    match /admins/{userId} {
+      allow read: if isAdmin();
+      // Only managed via Firebase Console or special script (not client SDK)
+      allow write: if false; 
+    }
+
+    match /system/analytics {
+      allow get: if isSignedIn();
+      allow list: if false;
+      // Analytics are updated via cloud functions or admin-level operations
+      // We'll allow admins to update for this demo
+      allow write: if isAdmin();
+    }
+
+    match /activity/{activityId} {
+      allow read: if isAdmin();
+      allow create: if isSignedIn() && 
+                      isValidId(activityId) &&
+                      incoming().userId == request.auth.uid &&
+                      incoming().timestamp == request.time;
+      allow update, delete: if false;
+    }
+  }
+}

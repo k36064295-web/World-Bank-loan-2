@@ -1,0 +1,61 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile and status information",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Firebase Auth UID" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "user"] },
+        "isOnline": { "type": "boolean" },
+        "lastSeen": { "type": "string", "format": "date-time" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "role", "createdAt", "updatedAt"]
+    },
+    "SystemAnalytics": {
+      "title": "System Analytics",
+      "description": "Aggregated statistics for the whole system",
+      "type": "object",
+      "properties": {
+        "totalUsers": { "type": "integer" },
+        "onlineUsers": { "type": "integer" },
+        "lastUpdated": { "type": "string", "format": "date-time" }
+      }
+    },
+    "ActivityLog": {
+      "title": "Activity Log",
+      "description": "Record of user actions in the administrative panel",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "userName": { "type": "string" },
+        "type": { "type": "string", "enum": ["login", "logout", "user_update", "user_delete"] },
+        "details": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      }
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": "User",
+      "description": "User documents"
+    },
+    "system/analytics": {
+      "schema": "SystemAnalytics",
+      "description": "Global analytics counters"
+    },
+    "activity/{activityId}": {
+      "schema": "ActivityLog",
+      "description": "System-wide activity logs"
+    },
+    "admins/{userId}": {
+      "schema": "object",
+      "description": "Lookup for super-admins"
+    }
+  }
+}
